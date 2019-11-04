@@ -1,0 +1,96 @@
+{% extends 'bootstrap/base.html' %}
+
+
+{% block title %}
+        {% if title %}{{ title  }} - Beard Brothers{% else %}Welcome to Beard Brothers Better Beard Balm{% endif %}
+{% endblock %}
+
+
+
+{% block navbar %}
+ <a class="link" href="{{ url_for('main.landing') }}">
+ <img src="https://i.imgur.com/ekqTM9j.png?1" alt="banner" id="banner"></a>
+ <nav class="navbar navbar-default">
+         <div class="container">
+                <div class="navbar-header" style="float:left;">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                        </button>
+
+                </div>
+                <section class="navbar-section snipcart-summary">
+                <div class="input-group input-line" style="float:right;margin-top: 7px;">
+                    <a href="" class="btn btn-primary snipcart-checkout">
+                        <i class="icon icon-apps"></i>
+                        View cart (<span class="snipcart-total-items">0</span>)
+                    </a>
+               </div>
+               </section>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="float:left;" style="border-style: solid;">
+                        <ul class="nav navbar-nav">
+                                {% if current_user.is_admin %}
+                                <li><a href="{{ url_for('admin.index_view') }}">Admin</a></li>
+                                {% endif %}
+                                <li><a href="{{ url_for('main.products') }}">Products</a></li>
+                                <li><a href="{{ url_for('main.about') }}">About</a></li>
+                                <li><a href="{{ url_for('main.feedback') }}">Feedback</a></li>
+                                {% if current_user.is_anonymous %}
+                                <li><a href="{{ url_for('main.login') }}">Login</a></li>
+                                {% else %}
+                                <li><a href="{{ url_for('main.logout') }}">Logout</a></li>
+                                {% endif %}
+                        </ul>
+                </div>
+        </div>
+</nav>
+
+<style>
+img#banner {
+    width:100%;
+    height:300px;
+}
+
+@media only screen and (max-width:600px) {
+    img#banner {
+        width:100%;
+        height:100%;
+    }
+}
+</style>
+
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-info" role="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+        {% block app_content %}{% endblock %}
+    </div>
+{% endblock %}
+
+
+
+{% block scripts %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+<!--Snipcart-->
+<script src="https://cdn.snipcart.com/scripts/2.0/snipcart.js" id="snipcart" data-api-key="MWZhZDlhMTEtMjk5Mi00ZWZlLTk4MmItMmEyMzVjMDRkNTIwNjM2OTMwMDQ1NTMwNjE0ODQy"></script>
+<link href="https://cdn.snipcart.com/themes/2.0/base/snipcart.min.css" type="text/css" rel="stylesheet">
+
+
+<!--Bootstrap -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+{% endblock %}
+

@@ -1,0 +1,5 @@
+Thanks for signing up. Please follow the link to activate your account.
+{{ confirm_url }}
+
+
+Beard Bros

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+
+{% block app_content %}
+        <div class="product-detail">
+                {% for p in product_detail_ %}
+                <h1>{{ p.product_name }}</h1>
+                <img src="{{ p.image }}" class="img-responsive"alt="no-image"/>
+                <p class="price">${{ p.price }}</p>
+                <button
+                        class="snipcart-add-item"
+                        data-item-id="{{ p.productid }}"
+                        data-item-name="{{ p.product_name }}"
+                        data-item-price="{{ p.price }}"
+                        data-item-weight="1"
+                        data-item-url="{{ url_for('main.product_detail',productid=p.id)}}"
+                        data-item-has-taxes-included="false"
+                        data-item-description="{{ p.description }}">
+                        Add to cart
+                </button>
+        <br>
+        <h2>Description</h2>
+        {{ p.description }}
+        <br>
+        <br>
+        <h3>Reviews</h3>
+        Gandalf:{{p.product_review}}
+        {% endfor %}
+        </div>
+
+
+{% endblock %}
+

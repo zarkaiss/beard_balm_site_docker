@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+
+{% block app_content %}
+<h2>Products</h2>
+        <div class="grid-container">
+                {% for p in products_ %}
+                <div> <a class="link" href="{{ url_for('main.product_detail', productid=p.productid) }}">
+
+                                <img src="{{p.image}}" alt="stuff" style="width:100%;height:250px;object-fit:cover;"/></a>
+                        <br>
+                        {{ p.product_name }}:
+                         ${{ p.price }}
+                </div>
+                {% endfor %}
+        </div>
+<style>
+.grid-container {
+        font-weight: bold;
+        font-size: 12px;
+        display: flex;
+        display: grid;
+        grid-template-columns: auto auto;
+        grid-gap: 10px;
+        padding: 10px;
+
+}
+
+</style>
+
+
+
+{% endblock %}
+

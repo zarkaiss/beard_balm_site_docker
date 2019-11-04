@@ -1,0 +1,67 @@
+version: '3.3'
+services:
+  backend:
+    build: # this is telling it to build the image
+        context: ./backend # this is telling it where the dockerfile is
+        dockerfile: Dockerfile # this is telling it to look for a dockerfile
+    # depends_on:
+      # - mysql-db
+    volumes:
+      - ./backend:/backend
+      - ./backend/scripts/entrypoint.sh:/entrypoint.sh
+      - ./backend/scripts/gunicorn.sh:/gunicorn.sh
+      - ./backend/scripts/start.sh:/start.sh
+    command: /gunicorn.sh
+    entrypoint: /entrypoint.sh
+    networks:
+      - bro_network
+#    restart: on-failure
+    env_file: .env
+  
+  worker:
+    image: docker_bro_backend #this specifically, means YOU need to buildthe users image however, you could
+    # tell it to point to the "backend" image and change the entrypoint; (line directly below
+    # this actually works as well... entrypoint.sh = the below command line basically
+    command: /gunicorn_worker.sh
+    volumes:
+      - ./backend:/backend
+      - ./backend/scripts/entrypoint.sh:/entrypoint.sh
+      - ./backend/scripts/gunicorn_worker.sh:/gunicorn_worker.sh
+      - ./backend/scripts/start.sh:/start.sh
+    env_file: .env
+    networks:
+      - bro_network 
+    
+  redis:
+    image: redis:4.0.11-alpine #this is saying grab this image with 4.0.11 tag
+    networks: #reason it cannot detect redis; needs to be on the same network
+      - bro_network
+  # mysql-db:
+  #   image: mysql:8.0.18
+  #   volumes:
+  #     - ./database:/var/lib/mysql
+  #   env_file:
+  #     - .env
+  #   networks:
+  #     - fridginator_network
+  #   ports:
+  #     - '3306:3306'
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - '8000:80'
+    depends_on:
+      - backend
+    networks:
+      - bro_network
+    volumes:
+      - ./backend/media/:/media/
+      - ./backend/staticfiles/:/staticfiles/
+      - ./backend/static/:/static/
+      - ./nginx/dev.conf:/etc/nginx/nginx.conf
+    logging:
+        driver: none
+
+networks:
+  bro_network:
