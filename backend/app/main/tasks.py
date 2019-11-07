@@ -2,6 +2,9 @@ import time
 import os
 import boto3
 from app import db
+from flask_mail import Message
+from app import mail
+from flask import current_app
 from app.models import User
 
 
@@ -27,3 +30,6 @@ def send_email(email, body):
     user.email_sent = True
     db.session.commit()
     return True
+
+
+
