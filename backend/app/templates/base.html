@@ -1,8 +1,13 @@
 {% extends 'bootstrap/base.html' %}
 
-
-{% block title %}
-        {% if title %}{{ title  }} - Beard Brothers{% else %}Welcome to Beard Brothers Better Beard Balm{% endif %}
+{% block head %}
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='images/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ url_for('static', filename='images/site.webmanifest') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <title> {% if title %}{{ title  }} - Beard Brothers{% else %}Welcome to Beard Brothers Better Beard Balm{% endif %}</title>
 {% endblock %}
 
 
@@ -42,6 +47,15 @@
                                 {% else %}
                                 <li><a href="{{ url_for('main.logout') }}">Logout</a></li>
                                 {% endif %}
+                                <!--<li><input type="checkbox" style="" class="b-contain" id="darkSwitch"/><label class="custom-control-label" style="padding-top:15px;padding-bottom:15px;" for="darkSwitch">Dark Mode</label></li>-->
+                                <li>
+                                <div class="btn-group-toggle" data-toggle="darkSwitch">
+                                    <label class="btn btn-secondary" style="padding-top:15px;padding-bottom:15px;" for="darkSwitch">
+                                        <input type="checkbox" name="darkSwitch" style="-webkit-appearance: none;" autocomplete="off" class="b-contain" id="darkSwitch" data-toggle="darkSwitch"/>Dark Mode</input>
+                                    </label>
+                                </div>
+                                </li>
+
                         </ul>
                 </div>
         </div>
@@ -79,6 +93,9 @@ img#banner {
 
 
 {% block scripts %}
+
+<script src="{{ url_for('static', filename='js/dark-mode-switch.min.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dark-mode.css') }}"  type="text/css">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>

@@ -3,29 +3,34 @@ set -o errexit
 set -o pipefail
 cmd="$@"
 
-# function db_ready(){
-# python << END
-# import sys
-# import myql fix me
-# import environ
+#function db_ready(){
+#python << END
+#import os
+#import sys
+#import psycopg2
+#from pathlib import Path
+#from dotenv import load_dotenv, find_dotenv
 
-# try:
-# 	env = environ.Env()
-# 	dbname = thing
-# 	user = thing2
-# 	password = thing 3
-# 	conn = db_connection
-# except dbspecificError:
-# 	sys.exit(-1)
-# sys.exit(0)
-# END
-# }
+#env_path = Path("./") / ".env"
 
-# until db_ready; do
-# 	>%2 echo "database is unavailable - sleeping"
-# 	sleep 1
-# done
+#try:
+#	dbname = os.getenv("db_name")
+#	dbuser = os.getenv("db_username")
+#	dbpassword = os.getenv("db_password")
+#	db_host = os.getenv("db_hostname")
+#	conn = psycopg2.connect(f"dbname={dbname} user={dbuser} password={dbpassword} host={db_host}")
+#except psycopg2.OperationalError as err:
+#    print(err)
+#	sys.exit(-1)
+#sys.exit(0)
+#END
+#}
 
-# >%2 echo "database is up - continuining
-echo "Database is coming online"
+#until db_ready; do
+#	>%2 echo "database is unavailable - sleeping"
+#	sleep 1
+#done
+
+#>%2 echo "database is up - continuing docker run"
+#echo "Database is up and available"
 exec $cmd

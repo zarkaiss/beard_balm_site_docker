@@ -1,0 +1,7 @@
+{% extends 'admin/master.html' %}
+
+{%block body%}
+    {% for key, value in frame.items() %}
+        {{ value[0] }}
+    {% endfor %}
+{% endblock %}

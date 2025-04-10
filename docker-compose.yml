@@ -57,8 +57,9 @@ services:
       - bro_network
     volumes:
       - ./backend/media/:/media/
+      - ./backend/app/static/:/static/
       - ./backend/staticfiles/:/staticfiles/
-      - ./backend/static/:/static/
+      #- ./app/static/:/static/
       - ./nginx/dev.conf:/etc/nginx/nginx.conf
     logging:
         driver: none

@@ -4,16 +4,30 @@
 {% block app_content %}
         <div class="product-detail">
                 {% for p in product_detail_ %}
+                {% for f in feedback3 %}
                 <h1>{{ p.product_name }}</h1>
                 <img src="{{ p.image }}" class="img-responsive"alt="no-image"/>
                 <p class="price">${{ p.price }}</p>
                 <button
-                        class="snipcart-add-item"
+                        class="snipcart-add-item" style="box-shadow: 0px 10px 14px -7px #3e7327;
+	                background:linear-gradient(to bottom, #77b55a 5%, #72b352 100%);
+	                background-color:#77b55a;
+	                border-radius:4px;
+	                border:1px solid #4b8f29;
+	                display:inline-block;
+	                cursor:pointer;
+        	        color:#ffffff;
+	                font-family:Arial;
+	                font-size:13px;
+	                font-weight:bold;
+	                padding:6px 12px;
+	                text-decoration:none;
+	                text-shadow:0px 1px 0px #5b8a3c;"
                         data-item-id="{{ p.productid }}"
                         data-item-name="{{ p.product_name }}"
                         data-item-price="{{ p.price }}"
                         data-item-weight="1"
-                        data-item-url="{{ url_for('main.product_detail',productid=p.id)}}"
+                        data-item-url="{{ url_for('main.product_detail',productid=p.productid)}}"
                         data-item-has-taxes-included="false"
                         data-item-description="{{ p.description }}">
                         Add to cart
@@ -24,7 +38,8 @@
         <br>
         <br>
         <h3>Reviews</h3>
-        Gandalf:{{p.product_review}}
+        {{f.name}}:{{p.product_review}}
+        {% endfor %}
         {% endfor %}
         </div>
 

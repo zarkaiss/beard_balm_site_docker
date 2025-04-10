@@ -7,7 +7,7 @@ from flask_bootstrap import Bootstrap
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 from flask_admin.menu import MenuLink
-from app.admin import AdminView, SnipCart
+from app.admin import AdminView
 from wtforms.fields import SelectField
 from flask_mail import Mail
 
@@ -69,7 +69,7 @@ def create_app(config_class=Config):
     admin.add_view(ProductModelView(Product, db.session))
     admin.add_view(ModelView(Role, db.session))
     admin.add_view(ModelView(Feedback, db.session))
-    admin.add_view(SnipCart(name='SnipCart', endpoint='SnipCart'))
+    #admin.add_view(SnipCart(name='SnipCart', endpoint='SnipCart'))
     admin.add_link(MenuLink(name='Back Home', url='/'))
 
 

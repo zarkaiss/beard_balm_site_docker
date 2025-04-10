@@ -1,9 +1,10 @@
 from app import db
+import random
 from app.main import bp
 from flask_login import current_user, login_user, logout_user, login_required
-from flask import render_template, abort, flash, redirect, url_for, request, current_app
+from flask import render_template, abort, flash, redirect, url_for, request, current_app, make_response, send_from_directory
 from app.main.forms import LoginForm, RegistrationForm, FeedBackForm, ResetPasswordRequestForm, ResetPasswordForm
-from app.models import User, Feedback, Product
+from app.models import User, Feedback, Product, Poll, Option
 from werkzeug.urls import url_parse
 import redis
 from rq import Queue, Connection
@@ -143,7 +144,7 @@ def reset_with_token(token):
 
 @bp.route('/products')
 def products():
-    products_ = Product.query.all()
+    products_ = Product.query.filter_by(available=True)
     return render_template('products.html', title='Products', products_=products_)
 
 
@@ -151,7 +152,9 @@ def products():
 @bp.route('/products/<productid>')
 def product_detail(productid):
     product_detail_ = Product.query.filter_by(productid=productid)
-    return render_template('product_detail.html',product_detail_=product_detail_)
+    feedback2 = Feedback.query.filter_by(approved=True).all()
+    feedback3 = random.choices(feedback2)
+    return render_template('product_detail.html',product_detail_=product_detail_, feedback3=feedback3)
 
 
 @bp.route('/about')
@@ -177,6 +180,34 @@ def feedback():
         return redirect(url_for('main.feedback'))
     return render_template('feedback.html', title='Feedback',form=form)
 
+#@bp.route('/static/<path:path>')
+#def send_static(path):
+#    return send_from_directory('static', path)
+
+# @bp.route('/vote', methods=['POST', 'GET'])
+# def vote():
+#     has_voted = False
+#     vote_stamp = request.cookies.get('vote_stamp')
+
+#     if request.method == 'POST':
+#         has_voted = True
+#         vote = request.form['vote']
+#         if vote_stamp:
+#             flash('You have already voted! Vote stamp is: ' + vote_stamp)
+#         else:
+#             voted_option = Option.query.filter_by(poll_id=poll.id,id=vote).first()
+#             voted_option.votes += 1
+#             db.session.commit()
+#     options = Option.query.filter_by(poll_id=poll.id).all()
+#     resp = make_response(render_template('vote.html', poll=poll, options=options))
+
+#     if has_voted:
+#         vote_stamp = hex(random.getrandbits(64))[2:-1]
+#         resp.set_cookie('vote_stamp', vote_stamp)
+
+#     return resp
+
+    
 
 
 
